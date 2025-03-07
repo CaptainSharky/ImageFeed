@@ -1,5 +1,6 @@
 import UIKit
 
+// Класс ячейки таблицы
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
     
