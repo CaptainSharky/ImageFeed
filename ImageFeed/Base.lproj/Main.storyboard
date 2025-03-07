@@ -67,6 +67,11 @@
                                                 <constraint firstItem="kFl-mK-3DR" firstAttribute="leading" secondItem="HO9-5Y-jXJ" secondAttribute="leading" constant="8" id="yju-FI-L8k"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellImage" destination="HO9-5Y-jXJ" id="ico-fb-pb4"/>
+                                            <outlet property="dateLabel" destination="kFl-mK-3DR" id="IGp-fj-NhT"/>
+                                            <outlet property="likeButton" destination="716-K3-6sj" id="jvj-OL-OYr"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
