@@ -1,6 +1,6 @@
 import UIKit
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView! // Таблица-лента
     private let photosName: [String] = Array(0..<20).map { "\($0)" } // Названия mock-фотографий
     
@@ -20,6 +20,7 @@ class ImagesListViewController: UIViewController {
 }
 // MARK: - Extensions
 extension ImagesListViewController: UITableViewDelegate {
+    // Обработать нажатие на ячейку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
@@ -33,6 +34,8 @@ extension ImagesListViewController: UITableViewDelegate {
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
         let imageWidth = image.size.width
+        
+        if imageWidth == 0 { return 200 }
         let scale = imageViewWidth / imageWidth
         return image.size.height * scale + imageInsets.bottom + imageInsets.top
     }
@@ -52,24 +55,13 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        configCell(for: imagesListCell, with: indexPath)
+        if let image = UIImage(named: photosName[indexPath.row]) {
+            let dateText = dateFormatter.string(from: Date())
+            let isLiked = (indexPath.row % 2 == 0)
+            
+            imagesListCell.configCell(with: image, dateText: dateText, isLiked: isLiked)
+        }
+        
         return imagesListCell
-    }
-    
-    // Настроить ячейку
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return
-        }
-        
-        cell.cellImage.image = image
-        cell.dateLabel.text = dateFormatter.string(from: Date())
-        
-        // Картинка кнопки в зависимости от четности индекса
-        if indexPath.row % 2 == 0 {
-            cell.likeButton.setImage(UIImage(named: "LikeActive"), for: .normal)
-        } else {
-            cell.likeButton.setImage(UIImage(named: "LikeNoActive"), for: .normal)
-        }
     }
 }
