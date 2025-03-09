@@ -109,29 +109,29 @@
                                 <rect key="frame" x="16" y="82" width="70" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="8qW-f7-jy0"/>
-                                    <constraint firstAttribute="height" constant="70" id="Jzh-se-Vpf"/>
+                                    <constraint firstAttribute="width" secondItem="yvl-KG-WbE" secondAttribute="height" multiplier="1:1" id="RSE-o3-YZt"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Имя Фамилия" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lBb-g8-6hJ" userLabel="userName">
-                                <rect key="frame" x="16" y="160" width="158" height="28"/>
+                                <rect key="frame" x="16" y="160" width="343" height="28"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
                                 <color key="textColor" name="YP White"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@nick_name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2X-xg-jhQ" userLabel="nickName">
-                                <rect key="frame" x="16" y="196" width="78" height="16"/>
+                                <rect key="frame" x="16" y="196" width="343" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" name="YP Gray"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, world!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcV-nU-Icf" userLabel="description">
-                                <rect key="frame" x="16" y="220" width="76" height="16"/>
+                                <rect key="frame" x="16" y="220" width="343" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" name="YP White"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Gd-5h-XvZ" userLabel="exitButton">
-                                <rect key="frame" x="307" y="105" width="44" height="44"/>
+                                <rect key="frame" x="315" y="95" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="51E-HS-AVD"/>
                                     <constraint firstAttribute="width" constant="44" id="bo3-MR-qCM"/>
@@ -139,7 +139,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="Exit"/>
                                 <connections>
-                                    <action selector="exitButton:" destination="Jd7-ry-Kdm" eventType="touchUpInside" id="VcB-dR-soP"/>
+                                    <action selector="exitButtonTapped:" destination="Jd7-ry-Kdm" eventType="touchUpInside" id="nU1-9a-unK"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -147,23 +147,24 @@
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
                             <constraint firstItem="yvl-KG-WbE" firstAttribute="leading" secondItem="Yfl-H8-OGu" secondAttribute="leading" constant="16" id="4YS-zA-5wd"/>
-                            <constraint firstItem="Yfl-H8-OGu" firstAttribute="trailing" secondItem="2Gd-5h-XvZ" secondAttribute="trailing" constant="24" id="7Lp-7W-4Jh"/>
+                            <constraint firstItem="Yfl-H8-OGu" firstAttribute="trailing" secondItem="2Gd-5h-XvZ" secondAttribute="trailing" constant="16" id="7Lp-7W-4Jh"/>
                             <constraint firstItem="gcV-nU-Icf" firstAttribute="top" secondItem="z2X-xg-jhQ" secondAttribute="bottom" constant="8" id="7sE-V1-2Xr"/>
-                            <constraint firstItem="Yfl-H8-OGu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gcV-nU-Icf" secondAttribute="trailing" symbolic="YES" id="B8S-I6-dlE"/>
-                            <constraint firstItem="2Gd-5h-XvZ" firstAttribute="top" secondItem="Yfl-H8-OGu" secondAttribute="top" constant="55" id="DH5-0r-cDt"/>
+                            <constraint firstItem="Yfl-H8-OGu" firstAttribute="trailing" secondItem="z2X-xg-jhQ" secondAttribute="trailing" constant="16" id="AHQ-Be-fob"/>
                             <constraint firstItem="yvl-KG-WbE" firstAttribute="top" secondItem="Yfl-H8-OGu" secondAttribute="top" constant="32" id="GqQ-mO-yBR"/>
                             <constraint firstItem="lBb-g8-6hJ" firstAttribute="leading" secondItem="Yfl-H8-OGu" secondAttribute="leading" constant="16" id="MC6-rA-Cdd"/>
-                            <constraint firstItem="Yfl-H8-OGu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="z2X-xg-jhQ" secondAttribute="trailing" symbolic="YES" id="RAl-kc-CeM"/>
                             <constraint firstItem="z2X-xg-jhQ" firstAttribute="top" secondItem="lBb-g8-6hJ" secondAttribute="bottom" constant="8" id="UA1-e4-Jr7"/>
+                            <constraint firstItem="2Gd-5h-XvZ" firstAttribute="centerY" secondItem="yvl-KG-WbE" secondAttribute="centerY" id="bKf-uM-Oar"/>
                             <constraint firstItem="gcV-nU-Icf" firstAttribute="leading" secondItem="Yfl-H8-OGu" secondAttribute="leading" constant="16" id="cbh-ap-d0i"/>
                             <constraint firstItem="lBb-g8-6hJ" firstAttribute="top" secondItem="yvl-KG-WbE" secondAttribute="bottom" constant="8" id="eNS-YY-TXs"/>
-                            <constraint firstItem="Yfl-H8-OGu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="lBb-g8-6hJ" secondAttribute="trailing" symbolic="YES" id="qsQ-Vc-EYA"/>
+                            <constraint firstItem="Yfl-H8-OGu" firstAttribute="trailing" secondItem="lBb-g8-6hJ" secondAttribute="trailing" constant="16" id="uP6-bc-Qde"/>
                             <constraint firstItem="z2X-xg-jhQ" firstAttribute="leading" secondItem="Yfl-H8-OGu" secondAttribute="leading" constant="16" id="uya-LS-OGh"/>
+                            <constraint firstItem="Yfl-H8-OGu" firstAttribute="trailing" secondItem="gcV-nU-Icf" secondAttribute="trailing" constant="16" id="yuf-cx-EOI"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="avatarPhoto" destination="yvl-KG-WbE" id="En6-LH-e4K"/>
                         <outlet property="descriptionLabel" destination="gcV-nU-Icf" id="MTh-rW-nx1"/>
+                        <outlet property="exitButton" destination="2Gd-5h-XvZ" id="BPm-cl-kgq"/>
                         <outlet property="nickNameLabel" destination="z2X-xg-jhQ" id="N2m-Rm-t4i"/>
                         <outlet property="userNameLabel" destination="lBb-g8-6hJ" id="LVf-je-FRU"/>
                     </connections>
