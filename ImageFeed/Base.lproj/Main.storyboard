@@ -23,8 +23,8 @@
                         </tabBarAppearance>
                     </tabBar>
                     <connections>
-                        <segue destination="cdp-aE-vz9" kind="relationship" relationship="viewControllers" id="lh9-zt-kTC"/>
-                        <segue destination="Jd7-ry-Kdm" kind="relationship" relationship="viewControllers" id="iKj-EV-gK0"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="wZN-73-dy4"/>
+                        <segue destination="Jd7-ry-Kdm" kind="relationship" relationship="viewControllers" id="z5U-Jl-vAd"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2zl-K7-eX6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -111,35 +111,50 @@
                             <constraint firstItem="xwZ-Jd-9Gr" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="wzL-aY-mKU"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="" image="tab_editorial_active" id="x9P-MT-wZC"/>
                     <navigationItem key="navigationItem" id="9xK-Wq-Q0H"/>
                     <connections>
                         <outlet property="tableView" destination="xwZ-Jd-9Gr" id="76E-Ye-3El"/>
-                        <segue destination="a0Y-BH-bNu" kind="show" identifier="ShowSingleImage" id="G36-c0-ZFh"/>
+                        <segue destination="a0Y-BH-bNu" kind="presentation" identifier="ShowSingleImage" id="G36-c0-ZFh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="967.20000000000005" y="-372.41379310344831"/>
+            <point key="canvasLocation" x="9" y="-372"/>
         </scene>
         <!--Single Image View Controller-->
         <scene sceneID="LQO-a7-dJG">
             <objects>
-                <viewController id="a0Y-BH-bNu" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="a0Y-BH-bNu" customClass="SingleImageViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QSV-fc-HT9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="PXp-gp-5SO">
-                                <rect key="frame" x="0.0" y="94" width="375" height="635"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="PXp-gp-5SO">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkY-lh-4JG" userLabel="Back Button">
+                                <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="LkY-lh-4JG" secondAttribute="height" multiplier="1:1" id="FvO-4V-AnJ"/>
+                                    <constraint firstAttribute="width" constant="44" id="fS9-TE-Eok"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="nav_back_button"/>
+                                <connections>
+                                    <action selector="didTapBackButton:" destination="a0Y-BH-bNu" eventType="touchUpInside" id="BlL-Yj-TWn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4Nd-ao-a1P"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
-                            <constraint firstItem="PXp-gp-5SO" firstAttribute="top" secondItem="4Nd-ao-a1P" secondAttribute="top" id="137-WU-5Av"/>
-                            <constraint firstItem="4Nd-ao-a1P" firstAttribute="bottom" secondItem="PXp-gp-5SO" secondAttribute="bottom" id="75u-ku-nvM"/>
-                            <constraint firstItem="PXp-gp-5SO" firstAttribute="leading" secondItem="4Nd-ao-a1P" secondAttribute="leading" id="MdL-xi-Jmj"/>
-                            <constraint firstItem="4Nd-ao-a1P" firstAttribute="trailing" secondItem="PXp-gp-5SO" secondAttribute="trailing" id="yXb-4d-EzB"/>
+                            <constraint firstItem="PXp-gp-5SO" firstAttribute="top" secondItem="QSV-fc-HT9" secondAttribute="top" id="137-WU-5Av"/>
+                            <constraint firstAttribute="bottom" secondItem="PXp-gp-5SO" secondAttribute="bottom" id="75u-ku-nvM"/>
+                            <constraint firstItem="PXp-gp-5SO" firstAttribute="leading" secondItem="QSV-fc-HT9" secondAttribute="leading" id="MdL-xi-Jmj"/>
+                            <constraint firstItem="LkY-lh-4JG" firstAttribute="top" secondItem="4Nd-ao-a1P" secondAttribute="top" constant="8" id="Mef-dR-2PJ"/>
+                            <constraint firstItem="LkY-lh-4JG" firstAttribute="leading" secondItem="4Nd-ao-a1P" secondAttribute="leading" constant="8" id="mhj-EV-xfL"/>
+                            <constraint firstAttribute="trailing" secondItem="PXp-gp-5SO" secondAttribute="trailing" id="yXb-4d-EzB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Ez1-WD-34V"/>
@@ -149,7 +164,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uHw-42-SCT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1972" y="-372"/>
+            <point key="canvasLocation" x="1073" y="-372"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="YOh-3o-Kk0">
@@ -228,36 +243,13 @@
             </objects>
             <point key="canvasLocation" x="10" y="352"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="zre-ds-8Jt">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cdp-aE-vz9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="tab_editorial_active" id="O0H-LJ-KJp"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xdB-RY-kf6">
-                        <rect key="frame" x="0.0" y="50" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" name="YP White"/>
-                        <color key="barTintColor" name="YP White"/>
-                        <navigationBarAppearance key="standardAppearance">
-                            <color key="backgroundColor" name="YP Black"/>
-                        </navigationBarAppearance>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ddW-il-IBY"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LZx-of-lHM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="24.800000000000001" y="-372.41379310344831"/>
-        </scene>
     </scenes>
     <resources>
         <image name="0" width="1600" height="1059"/>
         <image name="AvatarDefault" width="70" height="70"/>
         <image name="Exit" width="24" height="24"/>
         <image name="LikeActive" width="42" height="42"/>
+        <image name="nav_back_button" width="24" height="24"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <image name="tab_profile_active" width="30" height="30"/>
         <namedColor name="YP Black">

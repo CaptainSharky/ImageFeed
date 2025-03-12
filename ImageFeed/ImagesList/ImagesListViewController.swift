@@ -3,7 +3,7 @@ import UIKit
 final class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView! // Таблица-лента
     private let photosName: [String] = Array(0..<20).map { "\($0)" } // Названия mock-фотографий
-    private let showSingleImageSegueIdentifier = "ShowSingleImage"
+    private let showSingleImageSegueIdentifier = "ShowSingleImage" // Идентификатор перехода
     
     // Отформатировать дату
     private lazy var dateFormatter: DateFormatter = {
