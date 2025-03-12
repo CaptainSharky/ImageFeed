@@ -3,6 +3,7 @@ import UIKit
 final class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView! // Таблица-лента
     private let photosName: [String] = Array(0..<20).map { "\($0)" } // Названия mock-фотографий
+    private let showSingleImageSegueIdentifier = "ShowSingleImage"
     
     // Отформатировать дату
     private lazy var dateFormatter: DateFormatter = {
@@ -19,7 +20,7 @@ final class ImagesListViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowSingleImage" {
+        if segue.identifier == showSingleImageSegueIdentifier {
             guard
                 let viewController = segue.destination as? SingleImageViewController,
                 let indexPath = sender as? IndexPath
@@ -39,7 +40,7 @@ final class ImagesListViewController: UIViewController {
 extension ImagesListViewController: UITableViewDelegate {
     // Обработать нажатие на ячейку
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "ShowSingleImage", sender: indexPath)
+        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
     
     // Настроить динамическую высоту ячейки
