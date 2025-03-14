@@ -140,6 +140,9 @@
                                 </subviews>
                                 <viewLayoutGuide key="contentLayoutGuide" id="aqa-Tk-elr"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="ryb-2c-gG1"/>
+                                <connections>
+                                    <outlet property="delegate" destination="a0Y-BH-bNu" id="ffj-zH-T9S"/>
+                                </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkY-lh-4JG" userLabel="Back Button">
                                 <rect key="frame" x="8" y="8" width="44" height="44"/>
