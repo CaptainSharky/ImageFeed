@@ -10,7 +10,7 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var imageView: UIImageView!
     
     override func viewDidLoad() {
@@ -28,25 +28,34 @@ final class SingleImageViewController: UIViewController {
     
     // Алгоритм рескейла фотографии
     private func rescaleAndCenterImageScrollView(image: UIImage) {
+        view.layoutIfNeeded()
+        
         let minZoomScale = scrollView.minimumZoomScale
         let maxZoomScale = scrollView.maximumZoomScale
-        view.layoutIfNeeded()
         let visibleRectSize = scrollView.bounds.size
         let imageSize = image.size
         let hScale = visibleRectSize.width / imageSize.width
         let vScale = visibleRectSize.height / imageSize.height
         let scale = min(maxZoomScale, max(minZoomScale, min(hScale, vScale)))
         scrollView.setZoomScale(scale, animated: false)
-        scrollView.layoutIfNeeded()
-        let newContentSize = scrollView.contentSize
-        let x = (newContentSize.width - visibleRectSize.width) / 2
-        let y = (newContentSize.height - visibleRectSize.height) / 2
-        scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+        
+        centerImage()
+    }
+    
+    private func centerImage() {
+        let scrollViewSize = scrollView.bounds.size
+        let imageSize = imageView.frame.size
+        
+        let verticalInset = max(0, (scrollViewSize.height - imageSize.height) / 2)
+        let horizontalInset = max(0, (scrollViewSize.width - imageSize.width) / 2)
+        
+        scrollView.contentInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
     }
     
     @IBAction func didTapBackButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    
     @IBAction func didTapShareButton(_ sender: Any) {
         guard let image else { return }
         let share = UIActivityViewController(
@@ -60,5 +69,9 @@ final class SingleImageViewController: UIViewController {
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        centerImage()
     }
 }
