@@ -42,6 +42,7 @@ final class SingleImageViewController: UIViewController {
         centerImage()
     }
     
+    // Отцентровать изображение
     private func centerImage() {
         let scrollViewSize = scrollView.bounds.size
         let imageSize = imageView.frame.size
@@ -52,11 +53,13 @@ final class SingleImageViewController: UIViewController {
         scrollView.contentInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
     }
     
-    @IBAction func didTapBackButton(_ sender: Any) {
+    // Нажал кнопку "<"
+    @IBAction private func didTapBackButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func didTapShareButton(_ sender: Any) {
+    // Нажал кнопку "Поделиться"
+    @IBAction private func didTapShareButton(_ sender: Any) {
         guard let image else { return }
         let share = UIActivityViewController(
             activityItems: [image],

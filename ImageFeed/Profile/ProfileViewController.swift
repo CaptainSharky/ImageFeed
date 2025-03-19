@@ -13,6 +13,7 @@ final class ProfileViewController: UIViewController {
         setUIElements()
     }
     
+    // Добавить и настроить UI элементы
     private func setUIElements() {
         configAvatarPhoto()
         configUserNameLabel()
@@ -64,6 +65,7 @@ final class ProfileViewController: UIViewController {
         self.exitButton = exitButton
     }
     
+    // Добавление констрейнтов элементам
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             avatarPhoto.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
