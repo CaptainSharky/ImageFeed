@@ -78,24 +78,32 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Dxo-E5-8kr">
+                                <rect key="frame" x="0.0" y="92" width="414" height="4"/>
+                                <color key="progressTintColor" name="YP Black"/>
+                            </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="CWt-Lq-AcA"/>
                         <color key="backgroundColor" name="YP White"/>
                         <constraints>
+                            <constraint firstItem="Dxo-E5-8kr" firstAttribute="trailing" secondItem="CWt-Lq-AcA" secondAttribute="trailing" id="532-X9-1Bo"/>
                             <constraint firstAttribute="trailing" secondItem="eWf-36-NwW" secondAttribute="trailing" id="6HB-kx-Q0J"/>
                             <constraint firstItem="eWf-36-NwW" firstAttribute="leading" secondItem="2xb-7e-J4g" secondAttribute="leading" id="GXi-h1-Zb3"/>
                             <constraint firstItem="eWf-36-NwW" firstAttribute="top" secondItem="CWt-Lq-AcA" secondAttribute="top" id="O5y-DO-leu"/>
+                            <constraint firstItem="Dxo-E5-8kr" firstAttribute="top" secondItem="CWt-Lq-AcA" secondAttribute="top" id="dft-2a-fpE"/>
                             <constraint firstAttribute="bottom" secondItem="eWf-36-NwW" secondAttribute="bottom" id="ghR-ny-lzv"/>
+                            <constraint firstItem="Dxo-E5-8kr" firstAttribute="leading" secondItem="CWt-Lq-AcA" secondAttribute="leading" id="jXi-tV-nuv"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2SB-q8-gN6"/>
                     <connections>
+                        <outlet property="progressView" destination="Dxo-E5-8kr" id="yTL-kZ-v4M"/>
                         <outlet property="webView" destination="eWf-36-NwW" id="Ie8-oa-Nml"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Zb-E1-esk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-962" y="708"/>
+            <point key="canvasLocation" x="-962.31884057971024" y="707.8125"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ijy-Dr-SdN">
