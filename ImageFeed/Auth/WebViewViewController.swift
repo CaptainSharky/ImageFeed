@@ -51,6 +51,7 @@ final class WebViewViewController: UIViewController {
 
     private func loadAuthView() {
         guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
+            print("Error: can not create URLComponents from string")
             return
         }
 
@@ -62,6 +63,7 @@ final class WebViewViewController: UIViewController {
         ]
 
         guard let url = urlComponents.url else {
+            print("Error: can not create URL from URLComponents")
             return
         }
 
@@ -73,9 +75,14 @@ final class WebViewViewController: UIViewController {
 }
 
 extension WebViewViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping @MainActor (WKNavigationActionPolicy) -> Void) {
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping @MainActor (WKNavigationActionPolicy) -> Void
+    ) {
         if let code = code(from: navigationAction) {
-            delegate?.webViewViewController(self, didAuthenticateWithCode: code)
+            guard let delegate = self.delegate else { return }
+            delegate.webViewViewController(self, didAuthenticateWithCode: code)
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="azU-ri-phe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="azU-ri-phe">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,7 +25,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TLE-yc-MaB" userLabel="Enter Button">
-                                <rect key="frame" x="16" y="724" width="382" height="48"/>
+                                <rect key="frame" x="16" y="690" width="382" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="1mC-gg-np7"/>
@@ -71,7 +71,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eWf-36-NwW">
-                                <rect key="frame" x="0.0" y="92" width="414" height="804"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="756"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -79,7 +79,7 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Dxo-E5-8kr">
-                                <rect key="frame" x="0.0" y="92" width="414" height="4"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="4"/>
                                 <color key="progressTintColor" name="YP Black"/>
                             </progressView>
                         </subviews>
@@ -241,7 +241,7 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkY-lh-4JG" userLabel="Back Button">
-                                <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                <rect key="frame" x="8" y="56" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="LkY-lh-4JG" secondAttribute="height" multiplier="1:1" id="FvO-4V-AnJ"/>
                                     <constraint firstAttribute="width" constant="44" id="fS9-TE-Eok"/>
@@ -253,7 +253,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aGT-Lr-ck2" userLabel="Share Button">
-                                <rect key="frame" x="182" y="830" width="50" height="50"/>
+                                <rect key="frame" x="182" y="796" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="XV4-Nr-uUk"/>
                                     <constraint firstAttribute="width" secondItem="aGT-Lr-ck2" secondAttribute="height" multiplier="1:1" id="wBK-QE-eq1"/>
@@ -310,7 +310,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="azU-ri-phe" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="sbn-cy-CYt">
-                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="96" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
