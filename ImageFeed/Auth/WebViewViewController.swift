@@ -10,7 +10,6 @@ final class WebViewViewController: UIViewController {
         super.viewDidLoad()
 
         webView.navigationDelegate = self
-
         loadAuthView()
     }
 
@@ -69,7 +68,6 @@ final class WebViewViewController: UIViewController {
 
         let request = URLRequest(url: url)
         webView.load(request)
-
         updateProgress()
     }
 }
