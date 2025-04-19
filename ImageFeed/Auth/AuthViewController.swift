@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class AuthViewController: UIViewController {
     private let showWebViewIdentifier = "ShowWebView"
@@ -15,7 +16,7 @@ final class AuthViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showWebViewIdentifier {
             guard
-                let webViewViewController = segue.destination as? WebViewViewController
+                 let webViewViewController = segue.destination as? WebViewViewController
             else {
                 assertionFailure("Failed to prepare for \(showWebViewIdentifier)")
                 return
@@ -36,7 +37,9 @@ final class AuthViewController: UIViewController {
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+        ProgressHUD.animate()
         oauth2Service.fetchOAuthToken(code: code) { result in
+            ProgressHUD.dismiss()
             switch result {
             case .success(let token):
                 self.oauth2TokenStorage.token = token
