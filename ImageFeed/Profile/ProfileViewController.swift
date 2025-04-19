@@ -1,15 +1,15 @@
 import UIKit
 
 final class ProfileViewController: UIViewController {
-    private var avatarPhoto: UIImageView!
-    private var userNameLabel: UILabel!
-    private var nickNameLabel: UILabel!
-    private var descriptionLabel: UILabel!
-    private var exitButton: UIButton!
+    private var avatarPhoto: UIImageView?
+    private var userNameLabel: UILabel?
+    private var nickNameLabel: UILabel?
+    private var descriptionLabel: UILabel?
+    private var exitButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setUIElements()
     }
     
@@ -22,8 +22,9 @@ final class ProfileViewController: UIViewController {
         configExitButton()
         
         [avatarPhoto, userNameLabel, nickNameLabel, descriptionLabel, exitButton].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview($0)
+            guard let element = $0 else { return }
+            element.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(element)
         }
         
         activateConstraints()
@@ -67,6 +68,13 @@ final class ProfileViewController: UIViewController {
     
     // Добавление констрейнтов элементам
     private func activateConstraints() {
+        guard
+            let avatarPhoto,
+            let userNameLabel,
+            let nickNameLabel,
+            let descriptionLabel,
+            let exitButton
+        else { return }
         NSLayoutConstraint.activate([
             avatarPhoto.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             avatarPhoto.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
