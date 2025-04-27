@@ -8,6 +8,7 @@ final class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        // storage.token = nil
         if storage.token != nil {
             switchToTabBarController()
         } else {
