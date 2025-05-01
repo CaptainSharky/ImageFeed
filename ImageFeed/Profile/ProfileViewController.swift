@@ -6,13 +6,23 @@ final class ProfileViewController: UIViewController {
     private var nickNameLabel: UILabel?
     private var descriptionLabel: UILabel?
     private var exitButton: UIButton?
-    
+    private let profileService = ProfileService.shared
+    private let tokenStorage = OAuth2TokenStorage()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUIElements()
+
+        updateProfileDetails(profile: profileService.profile)
     }
-    
+
+    private func updateProfileDetails(profile: Profile?) {
+        self.userNameLabel?.text = profile?.name
+        self.nickNameLabel?.text = profile?.loginName
+        self.descriptionLabel?.text = profile?.bio
+    }
+
     // Добавить и настроить UI элементы
     private func setUIElements() {
         configAvatarPhoto()
