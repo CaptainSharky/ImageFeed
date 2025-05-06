@@ -8,7 +8,7 @@ final class ProfileService {
 
     private init() {}
 
-    func makeProfileInfoRequest(authToken: String) -> URLRequest? {
+    private func makeProfileInfoRequest(authToken: String) -> URLRequest? {
         guard let url = URL(string: "https://api.unsplash.com/me") else {
             preconditionFailure("Error: invalid base URL")
         }
@@ -46,7 +46,7 @@ final class ProfileService {
                         completion(.failure(error))
                     }
                 case .failure(let error):
-                    print("Error: urlSession.data error - \(error)")
+                    print("Error: (Profile Service) urlSession.data error - \(error)")
                     completion(.failure(error))
                 }
 
@@ -57,7 +57,7 @@ final class ProfileService {
         task.resume()
     }
 
-    enum ProfileServiceError: Error {
+    private enum ProfileServiceError: Error {
         case invalidRequest
     }
 }

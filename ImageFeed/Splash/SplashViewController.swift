@@ -3,6 +3,7 @@ import UIKit
 final class SplashViewController: UIViewController {
     private let storage = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     private let showAuthenticationScreenSegueIdentifier = "showAuthenticationScreen"
     private let tabBarViewControllerIdentifier = "TabBarViewController"
 
@@ -44,7 +45,15 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
 
             switch result {
-            case .success:
+            case .success(let profile):
+                profileImageService.fetchProfileImageURL(username: profile.username, token: token) { result in
+                    switch result {
+                    case .success(let avatarURL):
+                        print("Avatar URL: \(avatarURL)")
+                    case .failure: break
+                        // TODO [Sprint 11] Покажите ошибку получения профиля
+                    }
+                }
                 self.switchToTabBarController()
             case .failure:
                 // TODO [Sprint 11] Покажите ошибку получения профиля
