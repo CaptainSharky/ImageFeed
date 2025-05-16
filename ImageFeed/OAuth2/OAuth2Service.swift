@@ -49,24 +49,18 @@ final class OAuth2Service {
             return
         }
 
-        let task = urlSession.data(for: request) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let data):
-                    switch OAuthTokenResponseBody.decode(from: data) {
-                    case .success(let responseBody):
-                        completion(.success(responseBody.accessToken))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-
-                self?.task = nil
-                self?.lastCode = nil
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
+            switch result {
+            case .success(let responseBody):
+                completion(.success(responseBody.accessToken))
+            case .failure(let error):
+                print("[OAuth2Service.fetchOAuthToken]: Error - \(error.localizedDescription)")
+                completion(.failure(error))
             }
+            self?.task = nil
+            self?.lastCode = nil
         }
+
         self.task = task
         task.resume()
     }

@@ -30,28 +30,22 @@ final class ProfileService {
             return
         }
 
-        let task = urlSession.data(for: request) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let data):
-                    if let jsonString = String(data: data, encoding: .utf8) {
-                        print("Received JSON: \(jsonString)")
-                    }
-                    switch ProfileResult.decode(from: data) {
-                    case .success(let responseBody):
-                        self?.profile = responseBody
-                        print(responseBody.loginName)
-                        completion(.success(responseBody))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                case .failure(let error):
-                    print("Error: (Profile Service) urlSession.data error - \(error)")
-                    completion(.failure(error))
-                }
-
-                self?.task = nil
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<ProfileResult, Error>) in
+            switch result {
+            case .success(let response):
+                let username = response.username ?? ""
+                let name = "\(response.firstName ?? "") \(response.lastName ?? "")"
+                let loginName = "@\(username)"
+                let bio = response.bio ?? ""
+                let profile = Profile(username: username, name: name, loginName: loginName, bio: bio)
+                self?.profile = profile
+                print("[ProfileService.fetchProfile]: Success - \(loginName)")
+                completion(.success(profile))
+            case .failure(let error):
+                print("[ProfileService.fetchProfile]: Error - \(error.localizedDescription)")
+                completion(.failure(error))
             }
+            self?.task = nil
         }
         self.task = task
         task.resume()

@@ -32,29 +32,27 @@ final class ProfileImageService {
             return
         }
 
-        let task = urlSession.data(for: request) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let data):
-                    switch UserResult.decode(from: data) {
-                    case .success(let responseBody):
-                        guard let profileImageURL = responseBody.profileImage?["small"] else { break }
-                        self?.avatarURL = profileImageURL
-                        completion(.success(profileImageURL))
-                        NotificationCenter.default
-                            .post(
-                                name: ProfileImageService.didChangeNotification,
-                                object: self,
-                                userInfo: ["URL": profileImageURL])
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                case .failure(let error):
-                    print("Error: (ProfileImageService) urlSession.data error - \(error)")
-                    completion(.failure(error))
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<UserResult, Error>) in
+            switch result {
+            case .success(let response):
+                guard let profileImageURL = response.profileImage?["small"] else {
+                    print("[ProfileImageService.fetchProfileImageURL]: Error - missing profileImage URL")
+                    completion(.failure(ProfileImageServiceError.invalidRequest))
+                    return
                 }
-                self?.task = nil
+                self?.avatarURL = profileImageURL
+                print("[ProfileImageService.fetchProfileImageURL]: Success - URL: \(profileImageURL)")
+                completion(.success(profileImageURL))
+                NotificationCenter.default
+                    .post(
+                        name: ProfileImageService.didChangeNotification,
+                        object: self,
+                        userInfo: ["URL": profileImageURL])
+            case .failure(let error):
+                print("[ProfileImageService.fetchProfileImageURL]: Error - \(error.localizedDescription)")
+                completion(.failure(error))
             }
+            self?.task = nil
         }
         self.task = task
         task.resume()
@@ -67,17 +65,4 @@ final class ProfileImageService {
 
 struct UserResult: Codable {
     let profileImage: [String: String]?
-
-    static func decode(from data: Data) -> Result<UserResult, Error> {
-        do {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let response = try decoder.decode(UserResult.self, from: data)
-
-            return .success(response)
-        } catch {
-            print("Error: profile image decode error - \(error.localizedDescription)")
-            return .failure(error)
-        }
-    }
 }
