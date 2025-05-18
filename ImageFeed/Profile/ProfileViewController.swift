@@ -63,6 +63,7 @@ final class ProfileViewController: UIViewController {
         }
 
         activateConstraints()
+        view.backgroundColor = UIColor(named: "YP Black")
     }
 
     private func configAvatarPhoto() {
