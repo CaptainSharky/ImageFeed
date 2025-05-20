@@ -2,9 +2,13 @@ import Foundation
 
 final class OAuth2Service {
     static let shared = OAuth2Service()
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    
     private init() {}
 
-    func makeOAuthTokenRequest(code: String) -> URLRequest {
+    func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard let baseURL = URL(string: "https://unsplash.com") else {
             preconditionFailure("Invalid base URL")
         }
@@ -29,22 +33,39 @@ final class OAuth2Service {
     }
 
     func fetchOAuthToken(code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let request = makeOAuthTokenRequest(code: code)
-        let session = URLSession.shared
+        assert(Thread.isMainThread)
+        guard lastCode != code else {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
 
-        let task = session.data(for: request) { result in
+        task?.cancel()
+        lastCode = code
+
+        guard
+            let request = makeOAuthTokenRequest(code: code)
+        else {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             switch result {
-            case .success(let data):
-                switch OAuthTokenResponseBody.decode(from: data) {
-                case .success(let responseBody):
-                    completion(.success(responseBody.accessToken))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
+            case .success(let responseBody):
+                completion(.success(responseBody.accessToken))
             case .failure(let error):
+                print("[OAuth2Service.fetchOAuthToken]: Error - \(error.localizedDescription)")
                 completion(.failure(error))
             }
+            self?.task = nil
+            self?.lastCode = nil
         }
+
+        self.task = task
         task.resume()
+    }
+
+    enum AuthServiceError: Error {
+        case invalidRequest
     }
 }

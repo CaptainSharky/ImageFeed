@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     private var avatarPhoto: UIImageView?
@@ -6,13 +7,47 @@ final class ProfileViewController: UIViewController {
     private var nickNameLabel: UILabel?
     private var descriptionLabel: UILabel?
     private var exitButton: UIButton?
-    
+    private let profileService = ProfileService.shared
+    private let tokenStorage = OAuth2TokenStorage()
+    private var profileImageServiceObserver: NSObjectProtocol?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUIElements()
+
+        updateProfileDetails(profile: profileService.profile)
+
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
     }
-    
+
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL),
+            let avatarPhoto = avatarPhoto
+        else { return }
+        let processor = RoundCornerImageProcessor(cornerRadius: 16)
+        avatarPhoto.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "AvatarDefault"),
+            options: [.processor(processor)]
+        )
+    }
+
+    private func updateProfileDetails(profile: Profile?) {
+        self.userNameLabel?.text = profile?.name
+        self.nickNameLabel?.text = profile?.loginName
+        self.descriptionLabel?.text = profile?.bio
+    }
+
     // Добавить и настроить UI элементы
     private func setUIElements() {
         configAvatarPhoto()
@@ -20,22 +55,23 @@ final class ProfileViewController: UIViewController {
         configNickNameLabel()
         configDescriptionLabel()
         configExitButton()
-        
+
         [avatarPhoto, userNameLabel, nickNameLabel, descriptionLabel, exitButton].forEach {
             guard let element = $0 else { return }
             element.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(element)
         }
-        
+
         activateConstraints()
+        view.backgroundColor = UIColor(named: "YP Black")
     }
-    
+
     private func configAvatarPhoto() {
         let photo = UIImage(named: "base_photo")
         let avatarPhoto = UIImageView(image: photo)
         self.avatarPhoto = avatarPhoto
     }
-    
+
     private func configUserNameLabel() {
         let userNameLabel = UILabel()
         userNameLabel.text = "Екатерина Новикова"
@@ -43,7 +79,7 @@ final class ProfileViewController: UIViewController {
         userNameLabel.font = UIFont.systemFont(ofSize: 23, weight: .semibold)
         self.userNameLabel = userNameLabel
     }
-    
+
     private func configNickNameLabel() {
         let nickNameLabel = UILabel()
         nickNameLabel.text = "@ekaterina_nov"
@@ -51,7 +87,7 @@ final class ProfileViewController: UIViewController {
         nickNameLabel.font = UIFont.systemFont(ofSize: 13)
         self.nickNameLabel = nickNameLabel
     }
-    
+
     private func configDescriptionLabel() {
         let descriptionLabel = UILabel()
         descriptionLabel.text = "Hello, world!"
@@ -59,13 +95,13 @@ final class ProfileViewController: UIViewController {
         descriptionLabel.font = UIFont.systemFont(ofSize: 13)
         self.descriptionLabel = descriptionLabel
     }
-    
+
     private func configExitButton() {
         let exitButton = UIButton(type: .custom)
         exitButton.setImage(UIImage(named: "Exit"), for: .normal)
         self.exitButton = exitButton
     }
-    
+
     // Добавление констрейнтов элементам
     private func activateConstraints() {
         guard

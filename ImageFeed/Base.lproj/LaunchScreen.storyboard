@@ -17,15 +17,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Vector" translatesAutoresizingMaskIntoConstraints="NO" id="wBg-Ge-XLk">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="XaZ-rE-6Et">
                                 <rect key="frame" x="151" y="368" width="73" height="76"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
-                            <constraint firstItem="wBg-Ge-XLk" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ZiG-vX-Sv4"/>
-                            <constraint firstItem="wBg-Ge-XLk" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="aCZ-0t-MMK"/>
+                            <constraint firstItem="XaZ-rE-6Et" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="UTw-MU-ap9"/>
+                            <constraint firstItem="XaZ-rE-6Et" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="jbo-WH-CUC"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -35,7 +35,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Vector" width="73" height="76"/>
+        <image name="logo" width="73" height="76"/>
         <namedColor name="YP Black">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
