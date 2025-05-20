@@ -10,7 +10,7 @@ final class ProfileImageService {
     private init() {}
 
     private func makeProfileImageRequest(authToken: String, username: String) -> URLRequest? {
-        guard let url = URL(string: "https://api.unsplash.com/users/\(username)") else {
+        guard let url = URL(string: "/users/\(username)", relativeTo: Constants.defaultBaseUrl) else {
             preconditionFailure("Error: invalid base URL")
         }
 

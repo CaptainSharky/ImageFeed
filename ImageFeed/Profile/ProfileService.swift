@@ -9,7 +9,7 @@ final class ProfileService {
     private init() {}
 
     private func makeProfileInfoRequest(authToken: String) -> URLRequest? {
-        guard let url = URL(string: "https://api.unsplash.com/me") else {
+        guard let url = URL(string: "/me", relativeTo: Constants.defaultBaseUrl) else {
             preconditionFailure("Error: invalid base URL")
         }
 
