@@ -1,12 +1,13 @@
 import UIKit
+import Kingfisher
 
 // Класс ячейки таблицы
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
     
-    @IBOutlet private weak var cellImage: UIImageView!
-    @IBOutlet private weak var likeButton: UIButton!
-    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet weak var cellImage: UIImageView!
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var dateLabel: UILabel!
     
     // Настроить ячейку
     func configCell(with image: UIImage, dateText: String, isLiked: Bool) {
@@ -15,5 +16,10 @@ final class ImagesListCell: UITableViewCell {
         
         let likeImageName = isLiked ? "LikeActive" : "LikeNoActive"
         likeButton.setImage(UIImage(named: likeImageName), for: .normal)
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cellImage.kf.cancelDownloadTask()
     }
 }

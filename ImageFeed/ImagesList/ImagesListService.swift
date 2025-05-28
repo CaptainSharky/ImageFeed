@@ -1,6 +1,7 @@
 import Foundation
 
 final class ImagesListService {
+    static let shared = ImagesListService()
     static let didChangeNotification = Notification.Name(
         rawValue: "ImagesListServiceDidChange"
     )
@@ -9,14 +10,14 @@ final class ImagesListService {
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
 
+    private init() {}
 
-    func fetchPhotosNextPage() {
+    func fetchPhotosNextPage(token: String) {
         assert(Thread.isMainThread)
         task?.cancel()
 
         let nextPage = lastLoadedPage + 1
-
-        guard let request = makeImagesListRequest() else { return }
+        guard let request = makeImagesListRequest(token, page: nextPage) else { return }
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
             guard let self else { return }
 
@@ -52,10 +53,21 @@ final class ImagesListService {
         task.resume()
     }
 
-    private func makeImagesListRequest() -> URLRequest? {
-        guard let url = URL(string: "/photos", relativeTo: Constants.defaultBaseUrl) else {
-            preconditionFailure("Error: invalid base URL")
+    private func makeImagesListRequest(_ token: String, page: Int) -> URLRequest? {
+        var components = URLComponents()
+        components.host = Constants.defaultBaseUrl?.host
+        components.scheme = Constants.defaultBaseUrl?.scheme
+        components.path = "/photos"
+        components.queryItems = [URLQueryItem(name: "page", value: "\(page)")]
+        guard let url = components.url else {
+            preconditionFailure("[ImagesListService] Failed to build URL")
+            return nil
         }
-        return URLRequest(url: url)
+//        guard let url = URL(string: "/photos", relativeTo: Constants.defaultBaseUrl) else {
+//            preconditionFailure("Error: invalid base URL")
+//        }
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        return request
     }
 }
