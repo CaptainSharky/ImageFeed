@@ -6,6 +6,7 @@ final class ImagesListViewController: UIViewController {
     private let photosName: [String] = Array(0..<20).map { "\($0)" } // Названия mock-фотографий
     private let showSingleImageSegueIdentifier = "ShowSingleImage" // Идентификатор перехода
     private let imagesListService = ImagesListService.shared
+    private let token = OAuth2TokenStorage().token
     var photos: [Photo] = []
 
     // Отформатировать дату
@@ -30,7 +31,7 @@ final class ImagesListViewController: UIViewController {
             name: ImagesListService.didChangeNotification,
             object: nil
         )
-        guard let token = OAuth2TokenStorage().token else { return }
+        guard let token else { return }
         imagesListService.fetchPhotosNextPage(token: token)
     }
     
@@ -66,6 +67,17 @@ final class ImagesListViewController: UIViewController {
 
     @objc private func imagesListDidChange(_ notification: Notification) {
         updateTableViewAnimated()
+    }
+
+    private func showErrorAlert() {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Не удалось изменить лайк",
+            preferredStyle: .alert
+        )
+        let okayButton = UIAlertAction(title: "Ок", style: .default)
+        alert.addAction(okayButton)
+        self.present(alert, animated: true)
     }
 }
 // MARK: - Extensions
@@ -103,6 +115,7 @@ extension ImagesListViewController: UITableViewDataSource {
             assertionFailure("[ImagesListViewController]: Could not dequeue ImagesListCell")
             return UITableViewCell()
         }
+        cell.delegate = self
 
         let photo = photos[indexPath.row]
         cell.cellImage.image = UIImage(named: "stub")
@@ -130,9 +143,33 @@ extension ImagesListViewController: UITableViewDataSource {
         willDisplay cell: UITableViewCell,
         forRowAt indexPath: IndexPath
     ) {
-        guard let token = OAuth2TokenStorage().token else { return }
+        guard let token else { return }
         if indexPath.row == photos.count - 1 {
             imagesListService.fetchPhotosNextPage(token: token)
         }
+    }
+}
+
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photos[indexPath.row]
+
+        UIBlockingProgressHUD.show()
+        guard let token else { return }
+        imagesListService.changeLike(
+            photoId: photo.id,
+            isLike: !photo.isLiked,
+            token: token) { result in
+                switch result {
+                case .success:
+                    self.photos = self.imagesListService.photos
+                    cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
+                    UIBlockingProgressHUD.dismiss()
+                case .failure:
+                    UIBlockingProgressHUD.dismiss()
+                    self.showErrorAlert()
+                }
+            }
     }
 }

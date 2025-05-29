@@ -51,6 +51,17 @@ final class SplashViewController: UIViewController {
         ])
         self.logoImage = logoImage
     }
+
+    private func showErrorAlert() {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Не удалось получить профиль",
+            preferredStyle: .alert
+        )
+        let okayButton = UIAlertAction(title: "Ок", style: .default)
+        alert.addAction(okayButton)
+        self.present(alert, animated: true)
+    }
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
@@ -75,14 +86,13 @@ extension SplashViewController: AuthViewControllerDelegate {
                     switch result {
                     case .success(let avatarURL):
                         print("Avatar URL: \(avatarURL)")
-                    case .failure: break
-                        // TODO [Sprint 11] Покажите ошибку получения профиля
+                    case .failure:
+                        self.showErrorAlert()
                     }
                 }
                 self.switchToTabBarController()
             case .failure:
-                // TODO [Sprint 11] Покажите ошибку получения профиля
-                break
+                showErrorAlert()
             }
         }
     }

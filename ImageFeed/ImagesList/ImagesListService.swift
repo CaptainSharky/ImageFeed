@@ -53,6 +53,63 @@ final class ImagesListService {
         task.resume()
     }
 
+    func changeLike(
+        photoId: String,
+        isLike: Bool,
+        token: String,
+        _ completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        assert(Thread.isMainThread)
+        task?.cancel()
+
+        guard let request = makeChangeLikeRequest(photoId: photoId, isLike: isLike, token) else {
+            completion(.failure(ImagesListServiceError.invalidRequest))
+            return
+        }
+
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<PhotoLikeResponse, Error>) in
+            guard let self else { return }
+
+            switch result {
+            case .success:
+                // let updated = response.photo
+                DispatchQueue.main.async {
+                    if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                        let photo = self.photos[index]
+                        let newPhoto = Photo(
+                            id: photo.id,
+                            size: photo.size,
+                            createdAt: photo.createdAt,
+                            welcomeDescription: photo.welcomeDescription,
+                            thumbImageURL: photo.thumbImageURL,
+                            largeImageURL: photo.largeImageURL,
+                            isLiked: !photo.isLiked
+                        )
+                        self.photos[index] = newPhoto
+                    }
+                    completion(.success(()))
+                }
+            case .failure(let error):
+                print("[ImagesListService.changeLike]: Error - \(error.localizedDescription)")
+                completion(.failure(error))
+            }
+            self.task = nil
+        }
+        self.task = task
+        task.resume()
+    }
+
+    private func makeChangeLikeRequest(photoId: String, isLike: Bool, _ token: String) -> URLRequest? {
+        guard let url = URL(string: "/photos/\(photoId)/like", relativeTo: Constants.defaultBaseUrl) else {
+            preconditionFailure("[ImagesListService.changeLike] Failed to build URL")
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = isLike == true ? "POST" : "DELETE"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        return request
+    }
+
     private func makeImagesListRequest(_ token: String, page: Int) -> URLRequest? {
         var components = URLComponents()
         components.host = Constants.defaultBaseUrl?.host
@@ -60,14 +117,19 @@ final class ImagesListService {
         components.path = "/photos"
         components.queryItems = [URLQueryItem(name: "page", value: "\(page)")]
         guard let url = components.url else {
-            preconditionFailure("[ImagesListService] Failed to build URL")
-            return nil
+            preconditionFailure("[ImagesListService.makeImagesListRequest] Failed to build URL")
         }
-//        guard let url = URL(string: "/photos", relativeTo: Constants.defaultBaseUrl) else {
-//            preconditionFailure("Error: invalid base URL")
-//        }
+
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
+    }
+
+    private enum ImagesListServiceError: Error {
+        case invalidRequest
+    }
+
+    private struct PhotoLikeResponse: Decodable {
+        let photo: PhotoResult
     }
 }
