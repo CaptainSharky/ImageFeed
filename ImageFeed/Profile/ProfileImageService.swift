@@ -58,6 +58,10 @@ final class ProfileImageService {
         task.resume()
     }
 
+    func reset() {
+        avatarURL = nil
+    }
+
     private enum ProfileImageServiceError: Error {
         case invalidRequest
     }

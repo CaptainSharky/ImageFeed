@@ -99,6 +99,13 @@ final class ImagesListService {
         task.resume()
     }
 
+    func reset() {
+        photos = []
+        lastLoadedPage = 0
+        task?.cancel()
+        task = nil
+    }
+
     private func makeChangeLikeRequest(photoId: String, isLike: Bool, _ token: String) -> URLRequest? {
         guard let url = URL(string: "/photos/\(photoId)/like", relativeTo: Constants.defaultBaseUrl) else {
             preconditionFailure("[ImagesListService.changeLike] Failed to build URL")

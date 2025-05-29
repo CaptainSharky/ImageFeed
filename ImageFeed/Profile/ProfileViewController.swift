@@ -10,6 +10,7 @@ final class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let tokenStorage = OAuth2TokenStorage()
     private var profileImageServiceObserver: NSObjectProtocol?
+    private var profileLogoutService = ProfileLogoutService.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +67,10 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = UIColor(named: "YP Black")
     }
 
+    @objc private func didTapExitButton() {
+        profileLogoutService.logout()
+    }
+
     private func configAvatarPhoto() {
         let photo = UIImage(named: "base_photo")
         let avatarPhoto = UIImageView(image: photo)
@@ -99,6 +104,7 @@ final class ProfileViewController: UIViewController {
     private func configExitButton() {
         let exitButton = UIButton(type: .custom)
         exitButton.setImage(UIImage(named: "Exit"), for: .normal)
+        exitButton.addTarget(self, action: #selector(didTapExitButton), for: .touchUpInside)
         self.exitButton = exitButton
     }
 

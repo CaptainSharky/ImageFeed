@@ -51,6 +51,10 @@ final class ProfileService {
         task.resume()
     }
 
+    func reset() {
+        profile = nil
+    }
+
     private enum ProfileServiceError: Error {
         case invalidRequest
     }
