@@ -44,14 +44,14 @@ final class ImagesListViewController: UIViewController {
                 return
             }
             
-            let image = UIImage(named: photosName[indexPath.row])
-            viewController.image = image
+            let photo = photos[indexPath.row]
+            viewController.fullImageURL = URL(string: photo.fullImageURL)
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
 
-    func updateTableViewAnimated() {
+    private func updateTableViewAnimated() {
         let oldCount = photos.count
         let newCount = imagesListService.photos.count
         photos = imagesListService.photos
@@ -65,10 +65,6 @@ final class ImagesListViewController: UIViewController {
         }
     }
 
-    @objc private func imagesListDidChange(_ notification: Notification) {
-        updateTableViewAnimated()
-    }
-
     private func showErrorAlert() {
         let alert = UIAlertController(
             title: "Что-то пошло не так(",
@@ -78,6 +74,10 @@ final class ImagesListViewController: UIViewController {
         let okayButton = UIAlertAction(title: "Ок", style: .default)
         alert.addAction(okayButton)
         self.present(alert, animated: true)
+    }
+
+    @objc private func imagesListDidChange(_ notification: Notification) {
+        updateTableViewAnimated()
     }
 }
 // MARK: - Extensions

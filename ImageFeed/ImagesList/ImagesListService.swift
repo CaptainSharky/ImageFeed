@@ -32,7 +32,7 @@ final class ImagesListService {
                         createdAt: createdDate,
                         welcomeDescription: item.description,
                         thumbImageURL: item.urls.thumb,
-                        largeImageURL: item.urls.regular,
+                        fullImageURL: item.urls.full,
                         isLiked: item.likedByUser
                     )
                 }
@@ -82,7 +82,7 @@ final class ImagesListService {
                             createdAt: photo.createdAt,
                             welcomeDescription: photo.welcomeDescription,
                             thumbImageURL: photo.thumbImageURL,
-                            largeImageURL: photo.largeImageURL,
+                            fullImageURL: photo.fullImageURL,
                             isLiked: !photo.isLiked
                         )
                         self.photos[index] = newPhoto
