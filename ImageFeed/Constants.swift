@@ -7,3 +7,10 @@ enum Constants {
     static let accessScope = "public+read_user+write_likes"
     static let defaultBaseUrl = URL(string: "https://api.unsplash.com")
 }
+
+enum HTTPMethods {
+    static let get = "GET"
+    static let post = "POST"
+    static let put = "PUT"
+    static let delete = "DELETE"
+}

@@ -8,7 +8,7 @@ final class ProfileViewController: UIViewController {
     private var descriptionLabel: UILabel?
     private var exitButton: UIButton?
     private let profileService = ProfileService.shared
-    private let tokenStorage = OAuth2TokenStorage()
+    private let tokenStorage = OAuth2TokenStorage.shared
     private var profileImageServiceObserver: NSObjectProtocol?
     private var profileLogoutService = ProfileLogoutService.shared
 
@@ -38,7 +38,7 @@ final class ProfileViewController: UIViewController {
         let processor = RoundCornerImageProcessor(cornerRadius: 16)
         avatarPhoto.kf.setImage(
             with: url,
-            placeholder: UIImage(named: "AvatarDefault"),
+            placeholder: UIImage(resource: .avatarDefault),
             options: [.processor(processor)]
         )
     }
@@ -64,7 +64,7 @@ final class ProfileViewController: UIViewController {
         }
 
         activateConstraints()
-        view.backgroundColor = UIColor(named: "YP Black")
+        view.backgroundColor = UIColor(resource: .ypBlack)
     }
 
     @objc private func didTapExitButton() {
@@ -72,7 +72,7 @@ final class ProfileViewController: UIViewController {
     }
 
     private func configAvatarPhoto() {
-        let photo = UIImage(named: "base_photo")
+        let photo = UIImage(resource: .basePhoto)
         let avatarPhoto = UIImageView(image: photo)
         self.avatarPhoto = avatarPhoto
     }
@@ -80,7 +80,7 @@ final class ProfileViewController: UIViewController {
     private func configUserNameLabel() {
         let userNameLabel = UILabel()
         userNameLabel.text = "Екатерина Новикова"
-        userNameLabel.textColor = UIColor(named: "YP White")
+        userNameLabel.textColor = UIColor(resource: .ypWhite)
         userNameLabel.font = UIFont.systemFont(ofSize: 23, weight: .semibold)
         self.userNameLabel = userNameLabel
     }
@@ -88,7 +88,7 @@ final class ProfileViewController: UIViewController {
     private func configNickNameLabel() {
         let nickNameLabel = UILabel()
         nickNameLabel.text = "@ekaterina_nov"
-        nickNameLabel.textColor = UIColor(named: "YP Gray")
+        nickNameLabel.textColor = UIColor(resource: .ypGray)
         nickNameLabel.font = UIFont.systemFont(ofSize: 13)
         self.nickNameLabel = nickNameLabel
     }
@@ -96,14 +96,14 @@ final class ProfileViewController: UIViewController {
     private func configDescriptionLabel() {
         let descriptionLabel = UILabel()
         descriptionLabel.text = "Hello, world!"
-        descriptionLabel.textColor = UIColor(named: "YP White")
+        descriptionLabel.textColor = UIColor(resource: .ypWhite)
         descriptionLabel.font = UIFont.systemFont(ofSize: 13)
         self.descriptionLabel = descriptionLabel
     }
 
     private func configExitButton() {
         let exitButton = UIButton(type: .custom)
-        exitButton.setImage(UIImage(named: "Exit"), for: .normal)
+        exitButton.setImage(UIImage(resource: .exit), for: .normal)
         exitButton.addTarget(self, action: #selector(didTapExitButton), for: .touchUpInside)
         self.exitButton = exitButton
     }

@@ -6,11 +6,12 @@ final class ProfileLogoutService {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private let imagesListService = ImagesListService.shared
+    private let oauthTokenStorage = OAuth2TokenStorage.shared
 
     private init() { }
 
     func logout() {
-        OAuth2TokenStorage().token = nil
+        oauthTokenStorage.token = nil
 
         profileService.reset()
         profileImageService.reset()

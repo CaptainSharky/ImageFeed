@@ -1,7 +1,7 @@
 import UIKit
 
 final class SplashViewController: UIViewController {
-    private let storage = OAuth2TokenStorage()
+    private let storage = OAuth2TokenStorage.shared
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private let showAuthenticationScreenSegueIdentifier = "showAuthenticationScreen"
@@ -39,9 +39,9 @@ final class SplashViewController: UIViewController {
     }
 
     private func setUI() {
-        view.backgroundColor = UIColor(named: "YP Black")
+        view.backgroundColor = UIColor(resource: .ypBlack)
 
-        let logo = UIImage(named: "logo")
+        let logo = UIImage(resource: .logo)
         let logoImage = UIImageView(image: logo)
         logoImage.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(logoImage)

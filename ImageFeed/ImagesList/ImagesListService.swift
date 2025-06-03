@@ -9,6 +9,7 @@ final class ImagesListService {
     private var lastLoadedPage = 0
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
+    private static let dateFormatter = ISO8601DateFormatter()
 
     private init() {}
 
@@ -25,7 +26,7 @@ final class ImagesListService {
             case .success(let photoResults):
                 let newPhotos = photoResults.map { item -> Photo in
                     let size = CGSize(width: item.width, height: item.height)
-                    let createdDate = ISO8601DateFormatter().date(from: item.createdAt)
+                    let createdDate = ImagesListService.dateFormatter.date(from: item.createdAt)
                     return Photo(
                         id: item.id,
                         size: size,
@@ -112,7 +113,7 @@ final class ImagesListService {
         }
 
         var request = URLRequest(url: url)
-        request.httpMethod = isLike == true ? "POST" : "DELETE"
+        request.httpMethod = isLike ? HTTPMethods.post : HTTPMethods.delete
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
     }

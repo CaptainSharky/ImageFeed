@@ -6,7 +6,7 @@ final class ImagesListViewController: UIViewController {
     private let photosName: [String] = Array(0..<20).map { "\($0)" } // Названия mock-фотографий
     private let showSingleImageSegueIdentifier = "ShowSingleImage" // Идентификатор перехода
     private let imagesListService = ImagesListService.shared
-    private let token = OAuth2TokenStorage().token
+    private let token = OAuth2TokenStorage.shared.token
     var photos: [Photo] = []
 
     // Отформатировать дату
@@ -73,7 +73,7 @@ final class ImagesListViewController: UIViewController {
         )
         let okayButton = UIAlertAction(title: "Ок", style: .default)
         alert.addAction(okayButton)
-        self.present(alert, animated: true)
+        present(alert, animated: true)
     }
 
     @objc private func imagesListDidChange(_ notification: Notification) {
@@ -102,10 +102,8 @@ extension ImagesListViewController: UITableViewDelegate {
 
 extension ImagesListViewController: UITableViewDataSource {
     // Количество ячеек в таблице
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photos.count
-    }
-    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { photos.count }
+
     // Получить ячейку
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
@@ -118,11 +116,11 @@ extension ImagesListViewController: UITableViewDataSource {
         cell.delegate = self
 
         let photo = photos[indexPath.row]
-        cell.cellImage.image = UIImage(named: "stub")
+        cell.cellImage.image = UIImage(resource: .stub)
         cell.cellImage.kf.indicatorType = .activity
         cell.cellImage.kf.setImage(
             with: URL(string: photo.thumbImageURL),
-            placeholder: UIImage(named: "stub")
+            placeholder: UIImage(resource: .stub)
         ) { [weak self] result in
             guard let self else { return }
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
