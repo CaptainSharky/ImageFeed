@@ -121,10 +121,7 @@ extension ImagesListViewController: UITableViewDataSource {
         cell.cellImage.kf.setImage(
             with: URL(string: photo.thumbImageURL),
             placeholder: UIImage(resource: .stub)
-        ) { [weak self] result in
-            guard let self else { return }
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
+        )
 
         if let date = photo.createdAt {
             cell.dateLabel.text = dateFormatter.string(from: date)
