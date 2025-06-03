@@ -9,8 +9,13 @@ class OAuth2TokenStorage {
         set {
             if let newValue {
                 KeychainWrapper.standard.set(newValue, forKey: storageKey)
+            } else {
+                KeychainWrapper.standard.removeObject(forKey: storageKey)
             }
         }
     }
+    static let shared = OAuth2TokenStorage()
     private let storageKey = "Auth token"
+
+    private init() { }
 }

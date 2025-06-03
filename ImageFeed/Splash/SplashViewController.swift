@@ -1,7 +1,7 @@
 import UIKit
 
 final class SplashViewController: UIViewController {
-    private let storage = OAuth2TokenStorage()
+    private let storage = OAuth2TokenStorage.shared
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private let showAuthenticationScreenSegueIdentifier = "showAuthenticationScreen"
@@ -39,9 +39,9 @@ final class SplashViewController: UIViewController {
     }
 
     private func setUI() {
-        view.backgroundColor = UIColor(named: "YP Black")
+        view.backgroundColor = UIColor(resource: .ypBlack)
 
-        let logo = UIImage(named: "logo")
+        let logo = UIImage(resource: .logo)
         let logoImage = UIImageView(image: logo)
         logoImage.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(logoImage)
@@ -50,6 +50,17 @@ final class SplashViewController: UIViewController {
             logoImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         self.logoImage = logoImage
+    }
+
+    private func showErrorAlert() {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Не удалось получить профиль",
+            preferredStyle: .alert
+        )
+        let okayButton = UIAlertAction(title: "Ок", style: .default)
+        alert.addAction(okayButton)
+        self.present(alert, animated: true)
     }
 }
 
@@ -75,14 +86,13 @@ extension SplashViewController: AuthViewControllerDelegate {
                     switch result {
                     case .success(let avatarURL):
                         print("Avatar URL: \(avatarURL)")
-                    case .failure: break
-                        // TODO [Sprint 11] Покажите ошибку получения профиля
+                    case .failure:
+                        self.showErrorAlert()
                     }
                 }
                 self.switchToTabBarController()
             case .failure:
-                // TODO [Sprint 11] Покажите ошибку получения профиля
-                break
+                showErrorAlert()
             }
         }
     }

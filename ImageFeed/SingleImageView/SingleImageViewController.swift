@@ -1,15 +1,9 @@
 import UIKit
+import Kingfisher
 
 final class SingleImageViewController: UIViewController {
-    var image: UIImage? {
-        didSet {
-            guard isViewLoaded, let image else { return }
-            imageView.image = image
-            imageView.frame.size = image.size
-            rescaleAndCenterImageScrollView(image: image)
-        }
-    }
-    
+    var fullImageURL: URL?
+
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var imageView: UIImageView!
     
@@ -19,13 +13,28 @@ final class SingleImageViewController: UIViewController {
         // Значения для зума scrollView
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
-        
-        guard let image else { return }
-        imageView.image = image
-        imageView.frame.size = image.size
-        rescaleAndCenterImageScrollView(image: image)
+
+        setImage()
     }
-    
+
+    private func setImage() {
+        guard let fullImageURL else { return }
+
+        UIBlockingProgressHUD.show()
+        imageView.kf.setImage(with: fullImageURL) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+
+            guard let self else { return }
+            switch result {
+            case .success(let imageResult):
+                self.imageView.frame.size = imageResult.image.size
+                self.rescaleAndCenterImageScrollView(image: imageResult.image)
+            case .failure:
+                self.showErrorAlert()
+            }
+        }
+    }
+
     // Алгоритм рескейла фотографии
     private func rescaleAndCenterImageScrollView(image: UIImage) {
         view.layoutIfNeeded()
@@ -52,7 +61,22 @@ final class SingleImageViewController: UIViewController {
         
         scrollView.contentInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
     }
-    
+
+    private func showErrorAlert() {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Попробовать ещё раз?",
+            preferredStyle: .alert
+        )
+        let noNeedButton = UIAlertAction(title: "Не надо", style: .cancel)
+        let tryAgainButton = UIAlertAction(title: "Повторить", style: .default) { [weak self] _ in
+            self?.setImage()
+        }
+        alert.addAction(noNeedButton)
+        alert.addAction(tryAgainButton)
+        self.present(alert, animated: true)
+    }
+
     // Нажал кнопку "<"
     @IBAction private func didTapBackButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -60,7 +84,7 @@ final class SingleImageViewController: UIViewController {
     
     // Нажал кнопку "Поделиться"
     @IBAction private func didTapShareButton(_ sender: Any) {
-        guard let image else { return }
+        guard let image = imageView.image else { return }
         let share = UIActivityViewController(
             activityItems: [image],
             applicationActivities: nil

@@ -4,7 +4,7 @@ import ProgressHUD
 final class AuthViewController: UIViewController {
     private let showWebViewIdentifier = "ShowWebView"
     private let oauth2Service = OAuth2Service.shared
-    private let oauth2TokenStorage = OAuth2TokenStorage()
+    private let oauth2TokenStorage = OAuth2TokenStorage.shared
     weak var delegate: AuthViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -28,10 +28,10 @@ final class AuthViewController: UIViewController {
     }
 
     private func configureBackButton() {
-        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "nav_back_button_black")
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "nav_back_button_black")
+        navigationController?.navigationBar.backIndicatorImage = UIImage(resource: .navBackButtonBlack)
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(resource: .navBackButtonBlack)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem?.tintColor = UIColor(named: "YP Black")
+        navigationItem.backBarButtonItem?.tintColor = UIColor(resource: .ypBlack)
     }
 
     private func showErrorAlert() {
