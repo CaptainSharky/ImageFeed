@@ -23,7 +23,7 @@ struct AuthConfiguration {
     let authURLString: String
 
     static var standard: AuthConfiguration {
-        return AuthConfiguration(
+        AuthConfiguration(
             accessKey: Constants.accessKey,
             secretKey: Constants.secretKey,
             redirectURI: Constants.redirectURI,
