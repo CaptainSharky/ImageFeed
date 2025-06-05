@@ -120,8 +120,8 @@ final class ImagesListService {
 
     private func makeImagesListRequest(_ token: String, page: Int) -> URLRequest? {
         var components = URLComponents()
-        components.host = Constants.defaultBaseUrl?.host
-        components.scheme = Constants.defaultBaseUrl?.scheme
+        components.host = Constants.defaultBaseUrl.host
+        components.scheme = Constants.defaultBaseUrl.scheme
         components.path = "/photos"
         components.queryItems = [URLQueryItem(name: "page", value: "\(page)")]
         guard let url = components.url else {
