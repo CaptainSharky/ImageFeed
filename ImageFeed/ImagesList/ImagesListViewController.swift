@@ -14,7 +14,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     var presenter: ImagesListPresenterProtocol?
     @IBOutlet private var tableView: UITableView!
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,6 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
         tableView.delegate = self
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
 
-        presenter = ImagesListPresenter(view: self)
         presenter?.viewDidLoad()
     }
 
@@ -69,7 +68,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
             else {
                 return
             }
-            
+
             guard let photoURL = presenter?.getPhotoURL(at: indexPath.row) else { return }
             viewController.fullImageURL = photoURL
         } else {
@@ -84,7 +83,7 @@ extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
-    
+
     // Настроить динамическую высоту ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let viewModel = presenter?.cellViewModel(for: indexPath.row)
