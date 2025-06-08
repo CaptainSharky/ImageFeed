@@ -52,27 +52,6 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         self.present(alert, animated: true)
     }
 
-//    private func updateAvatar() {
-//        guard
-//            let profileImageURL = ProfileImageService.shared.avatarURL,
-//            let url = URL(string: profileImageURL),
-//            let avatarPhoto = avatarPhoto
-//        else { return }
-//        let processor = RoundCornerImageProcessor(cornerRadius: 16)
-//        avatarPhoto.kf.setImage(
-//            with: url,
-//            placeholder: UIImage(resource: .avatarDefault),
-//            options: [.processor(processor)]
-//        )
-//    }
-//
-//    private func updateProfileDetails(profile: Profile?) {
-//        self.userNameLabel?.text = profile?.name
-//        self.nickNameLabel?.text = profile?.loginName
-//        self.descriptionLabel?.text = profile?.bio
-//    }
-
-    // Добавить и настроить UI элементы
     private func setUIElements() {
         configAvatarPhoto()
         configUserNameLabel()
