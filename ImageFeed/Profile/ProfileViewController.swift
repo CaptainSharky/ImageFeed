@@ -49,7 +49,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         )
         let okayButton = UIAlertAction(title: "Ок", style: .default)
         alert.addAction(okayButton)
-        self.present(alert, animated: true)
+        present(alert, animated: true)
     }
 
     private func setUIElements() {
