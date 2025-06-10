@@ -48,20 +48,23 @@ final class ImageFeed_UITests: XCTestCase {
     }
 
     func testFeed() {
+        print(app.debugDescription)
         let table = app.tables.element(boundBy: 0)
         XCTAssertTrue(table.waitForExistence(timeout: 5))
 
-
         table.swipeUp()
-        sleep(2)
-
-        let cellToLike = table.cells.element(boundBy: 2)
-        XCTAssertTrue(cellToLike.waitForExistence(timeout: 6))
-
-        cellToLike.buttons["like button on"].tap()
         sleep(4)
-        cellToLike.buttons["like button off"].tap()
+        table.swipeDown()
+        sleep(5)
 
+        let cellToLike = table.cells.element(boundBy: 0)
+        XCTAssertTrue(cellToLike.waitForExistence(timeout: 3))
+
+        cellToLike.buttons.firstMatch.tap()
+        sleep(4)
+        cellToLike.buttons.firstMatch.tap()
+
+        sleep(3)
         cellToLike.tap()
 
         sleep(2)
@@ -85,6 +88,5 @@ final class ImageFeed_UITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["@chacha_s_sirom"].exists)
 
         app.buttons["logout button"].tap()
-        // app.alerts["Bye bye!"].scrollViews.otherElements.buttons["Yes"].tap()
     }
 }
