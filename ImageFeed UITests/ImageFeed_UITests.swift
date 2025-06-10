@@ -47,35 +47,34 @@ final class ImageFeed_UITests: XCTestCase {
         print(app.debugDescription)
     }
 
-    func testFeed() throws {
-        let tablesQuery = app.tables
-        let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
-        cell.swipeUp()
+    func testFeed() {
+        let table = app.tables.element(boundBy: 0)
+        XCTAssertTrue(table.waitForExistence(timeout: 5))
+
+
+        table.swipeUp()
+        sleep(2)
+
+        let cellToLike = table.cells.element(boundBy: 2)
+        XCTAssertTrue(cellToLike.waitForExistence(timeout: 6))
+
+        cellToLike.buttons["like button on"].tap()
+        sleep(4)
+        cellToLike.buttons["like button off"].tap()
+
+        cellToLike.tap()
 
         sleep(2)
 
-        let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
-        XCTAssertTrue(cellToLike.waitForExistence(timeout: 3))
-
-        let likeButton = cellToLike.buttons["like button"]
-        XCTAssertTrue(likeButton.waitForExistence(timeout: 3))
-        XCTAssertTrue(likeButton.isHittable)
-
-        likeButton.tap()
-        sleep(3)
-        likeButton.tap()
-
-        sleep(3)
-
-        cellToLike.tap()
-        sleep(5)
         let image = app.scrollViews.images.element(boundBy: 0)
         XCTAssertTrue(image.waitForExistence(timeout: 5))
+
         image.pinch(withScale: 3, velocity: 1)
         image.pinch(withScale: 0.5, velocity: -1)
 
-        let navBackButtonWhiteButton = app.buttons["nav back button white"]
-        navBackButtonWhiteButton.tap()
+        let backButton = app.buttons["nav back button white"]
+        XCTAssertTrue(backButton.waitForExistence(timeout: 5), "Кнопка назад не найдена")
+        backButton.tap()
     }
 
     func testProfile() throws {
