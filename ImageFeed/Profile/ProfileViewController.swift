@@ -1,55 +1,57 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenterProtocol? { get set }
+    func displayProfile(name: String, loginName: String, bio: String)
+    func displayAvatar(urlString: String?)
+    func showError(_ message: String)
+}
+
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
+    var presenter: ProfilePresenterProtocol?
     private var avatarPhoto: UIImageView?
     private var userNameLabel: UILabel?
     private var nickNameLabel: UILabel?
     private var descriptionLabel: UILabel?
     private var exitButton: UIButton?
-    private let profileService = ProfileService.shared
-    private let tokenStorage = OAuth2TokenStorage.shared
-    private var profileImageServiceObserver: NSObjectProtocol?
-    private var profileLogoutService = ProfileLogoutService.shared
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUIElements()
-
-        updateProfileDetails(profile: profileService.profile)
-
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.didChangeNotification,
-            object: nil,
-            queue: .main) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
-        updateAvatar()
+        presenter?.viewDidLoad()
     }
 
-    private func updateAvatar() {
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let url = URL(string: profileImageURL),
-            let avatarPhoto = avatarPhoto
-        else { return }
-        let processor = RoundCornerImageProcessor(cornerRadius: 16)
-        avatarPhoto.kf.setImage(
-            with: url,
-            placeholder: UIImage(resource: .avatarDefault),
-            options: [.processor(processor)]
+    func displayProfile(name: String, loginName: String, bio: String) {
+        userNameLabel?.text = name
+        nickNameLabel?.text = loginName
+        descriptionLabel?.text = bio
+    }
+
+    func displayAvatar(urlString: String?) {
+        if let urlString, let url = URL(string: urlString) {
+            avatarPhoto?.kf.setImage(
+                with: url,
+                placeholder: UIImage(resource: .avatarDefault),
+                options: [.processor(RoundCornerImageProcessor(cornerRadius: 16))]
+            )
+        } else {
+            avatarPhoto?.image = UIImage(resource: .avatarDefault)
+        }
+    }
+
+    func showError(_ message: String) {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: message,
+            preferredStyle: .alert
         )
+        let okayButton = UIAlertAction(title: "Ок", style: .default)
+        alert.addAction(okayButton)
+        present(alert, animated: true)
     }
 
-    private func updateProfileDetails(profile: Profile?) {
-        self.userNameLabel?.text = profile?.name
-        self.nickNameLabel?.text = profile?.loginName
-        self.descriptionLabel?.text = profile?.bio
-    }
-
-    // Добавить и настроить UI элементы
     private func setUIElements() {
         configAvatarPhoto()
         configUserNameLabel()
@@ -68,7 +70,7 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func didTapExitButton() {
-        profileLogoutService.logout()
+        presenter?.didTapLogout()
     }
 
     private func configAvatarPhoto() {
@@ -103,12 +105,12 @@ final class ProfileViewController: UIViewController {
 
     private func configExitButton() {
         let exitButton = UIButton(type: .custom)
+        exitButton.accessibilityIdentifier = "logout button"
         exitButton.setImage(UIImage(resource: .exit), for: .normal)
         exitButton.addTarget(self, action: #selector(didTapExitButton), for: .touchUpInside)
         self.exitButton = exitButton
     }
 
-    // Добавление констрейнтов элементам
     private func activateConstraints() {
         guard
             let avatarPhoto,
