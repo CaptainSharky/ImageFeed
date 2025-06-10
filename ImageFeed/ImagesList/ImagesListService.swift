@@ -9,19 +9,25 @@ final class ImagesListService {
     private var lastLoadedPage = 0
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
+    private var isFetching = false
     private static let dateFormatter = ISO8601DateFormatter()
 
     private init() {}
 
     func fetchPhotosNextPage(token: String) {
         assert(Thread.isMainThread)
+        guard !isFetching else { return }
+        isFetching = true
         task?.cancel()
 
         let nextPage = lastLoadedPage + 1
-        guard let request = makeImagesListRequest(token, page: nextPage) else { return }
+        guard let request = makeImagesListRequest(token, page: nextPage) else {
+            isFetching = false
+            return
+        }
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
             guard let self else { return }
-
+            defer { isFetching = false }
             switch result {
             case .success(let photoResults):
                 let newPhotos = photoResults.map { item -> Photo in

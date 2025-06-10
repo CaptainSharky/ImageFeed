@@ -50,14 +50,17 @@ final class ImageFeed_UITests: XCTestCase {
     func testFeed() throws {
         let tablesQuery = app.tables
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
-        // cell.swipeUp()
+        cell.swipeUp()
 
         sleep(2)
 
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
+        XCTAssertTrue(cellToLike.waitForExistence(timeout: 3))
+
         let likeButton = cellToLike.buttons["like button"]
         XCTAssertTrue(likeButton.waitForExistence(timeout: 3))
         XCTAssertTrue(likeButton.isHittable)
+
         likeButton.tap()
         sleep(3)
         likeButton.tap()
