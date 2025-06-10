@@ -27,6 +27,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TLE-yc-MaB" userLabel="Enter Button">
                                 <rect key="frame" x="16" y="724" width="382" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Authenticate"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="1mC-gg-np7"/>
                                 </constraints>
@@ -77,6 +78,9 @@
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="UnsplashWebView"/>
+                                </userDefinedRuntimeAttributes>
                             </wkWebView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Dxo-E5-8kr">
                                 <rect key="frame" x="0.0" y="92" width="414" height="4"/>
@@ -155,6 +159,7 @@
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="716-K3-6sj" userLabel="Like Button">
                                                     <rect key="frame" x="354" y="4" width="44" height="44"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="like button"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="44" id="1OY-6V-Jx7"/>
                                                         <constraint firstAttribute="height" constant="44" id="Mu8-zU-un1"/>
@@ -242,6 +247,7 @@
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkY-lh-4JG" userLabel="Back Button">
                                 <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                <accessibility key="accessibilityConfiguration" identifier="nav back button white"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="LkY-lh-4JG" secondAttribute="height" multiplier="1:1" id="FvO-4V-AnJ"/>
                                     <constraint firstAttribute="width" constant="44" id="fS9-TE-Eok"/>
