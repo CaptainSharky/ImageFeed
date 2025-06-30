@@ -7,7 +7,7 @@ protocol ProfilePresenterProtocol: AnyObject {
 }
 
 final class ProfilePresenter: ProfilePresenterProtocol {
-    var view: ProfileViewControllerProtocol?
+    weak var view: ProfileViewControllerProtocol?
     private let profileService: ProfileService
     private let imageService: ProfileImageService
     private let logoutService: ProfileLogoutService

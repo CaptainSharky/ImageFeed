@@ -18,7 +18,7 @@ protocol ImagesListPresenterProtocol: AnyObject {
 }
 
 final class ImagesListPresenter: ImagesListPresenterProtocol {
-    var view: ImagesListViewControllerProtocol?
+    weak var view: ImagesListViewControllerProtocol?
     private let service: ImagesListService
     private let tokenStorage: OAuth2TokenStorage
     private let dateFormatter: DateFormatter

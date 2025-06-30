@@ -7,7 +7,7 @@ final class WebViewTests: XCTestCase {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "WebViewViewController") as! WebViewViewController
 
-        let presenter = WebViewPresenterSpy()
+        let presenter = WebViewPresenterSpyMock()
         viewController.presenter = presenter
         presenter.view = viewController
 
@@ -20,7 +20,7 @@ final class WebViewTests: XCTestCase {
 
     func testPresenterCallsLoadRequest() {
         // given
-        let viewController = WebViewViewControllerSpy()
+        let viewController = WebViewViewControllerSpyMock()
         let authHelper = AuthHelper()
         let presenter = WebViewPresenter(authHelper: authHelper)
         viewController.presenter = presenter
@@ -35,7 +35,7 @@ final class WebViewTests: XCTestCase {
 
     func testProgressVisibleWhenLessThenOne() {
         // given
-        let presenter = WebViewPresenterSpy()
+        let presenter = WebViewPresenterSpyMock()
         let progress: Float = 0.6
 
         // when
@@ -47,7 +47,7 @@ final class WebViewTests: XCTestCase {
 
     func testProgressHiddenWhenOne() {
         // given
-        let presenter = WebViewPresenterSpy()
+        let presenter = WebViewPresenterSpyMock()
         let progress: Float = 1.0
 
         // when
